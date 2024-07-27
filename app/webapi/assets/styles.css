@@ -1,0 +1,55 @@
+body, #result{
+    background-color: #e8e8e8;
+    color: #5a5d5d;
+}
+
+.custom-table-header {
+    background-color: #7c8994;
+    color: white;
+}
+
+
+.ds-timestamp {
+    min-width: 100px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ds-text {
+    font-size: 1em;
+    min-width: 200px;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+.ds-checks {
+    font-size: 0.9em;
+    min-width: 200px;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+.btn-custom-blue {
+    color: #eee;
+    background-color: #286ea7;
+    border-color: #3d86e5;
+}
+
+.btn-custom-blue:hover {
+    color: #fff;
+    background-color: #3286cb;
+    border-color: #3d86e5;
+}
+
+.htmx-indicator{
+    opacity:0;
+    transition: opacity 500ms ease-in;
+}
+.htmx-request .htmx-indicator{
+    opacity:1
+}
+.htmx-request.htmx-indicator{
+    opacity:1
+}

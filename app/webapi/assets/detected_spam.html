@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detected Spam - TG-Spam</title>
+    {{template "heads.html"}}
+</head>
+<body>
+{{template "navbar.html"}}
+
+<div class="container mt-4">
+    <div class="row" id="spam-list">
+        <div class="col-md-12">
+            <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+            <h4>Detected Spam ({{.TotalDetectedSpam}})</h4>
+            <table class="table table-striped">
+                <thead class="custom-table-header">
+                <tr>
+                    <th>Timestamp</th>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Text</th>
+                    <th>Checks</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{range .DetectedSpamEntries}}
+                {{$text := .Text}}
+                {{$id := .ID}}
+                {{$added := .Added}}
+                <tr>
+                    <td class="ds-timestamp">{{.Timestamp.Format "2006-01-02 15:04:05"}}</td>
+                    <td>{{.UserID}}</td>
+                    <td>{{.UserName}}</td>
+                    <td class="ds-text">{{.Text}}</td>
+                    <td class="ds-checks">
+                        {{range .Checks}}
+                        <div style="display: flex; align-items: center;">
+                            <div class="{{if .Spam}}text-danger{{else}}text-success{{end}}" style="flex-grow: 1;">
+                                <strong>{{.Name}}:</strong> {{.Details}}
+                            </div>
+                            {{if and (not .Spam) (not $added) (eq .Name "classifier")}}
+                            <button
+                                    hx-post="/detected_spam/add" hx-vals='{"id": {{$id}}, "msg": "{{$text}}"}'
+                                    hx-target="this" hx-error="#error-message" hx-swap="outerHTML"
+                                    class="btn btn-sm btn-warning"
+                                    title="Add this message to spam samples">
+                                Add
+                            </button>
+                            {{end}}
+                        </div>
+                        {{end}}
+                    </td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="7">No detected spam found</td>
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
